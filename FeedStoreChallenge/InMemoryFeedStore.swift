@@ -13,7 +13,7 @@ public final class InMemoryFeedStore: FeedStore {
     }
     
     public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
-        images.append(contentsOf: feed)
+        self.images = feed
         self.timestamp = timestamp
         
         completion(nil)
