@@ -9,6 +9,8 @@ public final class InMemoryFeedStore: FeedStore {
     private var timestamp: Date?
     
     public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
+        images = []
+        
         completion(nil)
     }
     
