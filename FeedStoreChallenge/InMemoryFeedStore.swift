@@ -4,28 +4,31 @@
 
 import Foundation
 
+private struct InMemoryFeed {
+    let images: [LocalFeedImage]
+    let timestamp: Date
+}
+
 public final class InMemoryFeedStore: FeedStore {
-    private var images = [LocalFeedImage]()
-    private var timestamp: Date?
+    private var feed: InMemoryFeed?
     
     public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-        images = []
+        feed = nil
         
         completion(nil)
     }
     
     public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
-        self.images = feed
-        self.timestamp = timestamp
+        self.feed = InMemoryFeed(images: feed, timestamp: timestamp)
         
         completion(nil)
     }
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
-        if images.isEmpty {
+        if feed == nil {
             completion(.empty)
         } else {
-            completion(.found(feed: images, timestamp: timestamp ?? Date()))
+            feed.map { completion(.found(feed: $0.images, timestamp: $0.timestamp)) }
         }
     }
     
