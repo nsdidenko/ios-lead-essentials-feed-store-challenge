@@ -15,12 +15,12 @@ class UserDefaultsFeedStoreChallengeTests: XCTestCase, FeedStoreSpecs {
     
     override func setUp() {
         super.setUp()
-        UserDefaults.standard.removeObject(forKey: userDefaultsKey)
+        removeArtifacts()
     }
     
     override func tearDown() {
         super.tearDown()
-        UserDefaults.standard.removeObject(forKey: userDefaultsKey)
+        removeArtifacts()
     }
     
     func test_retrieve_deliversEmptyOnEmptyCache() {
@@ -96,6 +96,10 @@ class UserDefaultsFeedStoreChallengeTests: XCTestCase, FeedStoreSpecs {
     }
     
     // - MARK: Helpers
+    
+    private func removeArtifacts() {
+        UserDefaults.standard.removeObject(forKey: userDefaultsKey)
+    }
     
     private var userDefaultsKey: String {
         "Test.Feed"
