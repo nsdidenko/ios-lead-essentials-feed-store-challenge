@@ -12,6 +12,16 @@ class FileSystemFeedStoreChallengeTests: XCTestCase, FeedStoreSpecs {
 //   Uncomment the test implementations one by one.
 //   Follow the process: Make the test pass, commit, and move to the next one.
 //
+    
+    override func setUp() {
+        super.setUp()
+        setupEmptyStoreState()
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        undoStoreSideEffects()
+    }
 
     func test_retrieve_deliversEmptyOnEmptyCache() {
         let sut = makeSUT()
@@ -26,9 +36,9 @@ class FileSystemFeedStoreChallengeTests: XCTestCase, FeedStoreSpecs {
     }
 
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() {
-//        let sut = makeSUT()
-//
-//        assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut)
+        let sut = makeSUT()
+
+        assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut)
     }
 
     func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
@@ -86,6 +96,19 @@ class FileSystemFeedStoreChallengeTests: XCTestCase, FeedStoreSpecs {
     }
     
     // - MARK: Helpers
+    
+    private func setupEmptyStoreState() {
+        removeStoreArtifacts()
+    }
+    
+    private func undoStoreSideEffects() {
+        removeStoreArtifacts()
+    }
+    
+    private func removeStoreArtifacts() {
+        let storeURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("image-feed.store")
+        try? FileManager.default.removeItem(at: storeURL)
+    }
     
     private func makeSUT() -> FeedStore {
         FileSystemFeedStore()
