@@ -12,7 +12,17 @@ class CodableFeedStoreChallengeTests: XCTestCase, FeedStoreSpecs {
 //   Uncomment the test implementations one by one.
 //   Follow the process: Make the test pass, commit, and move to the next one.
 //
-
+    
+    override func setUp() {
+        super.setUp()
+        UserDefaults.standard.removeObject(forKey: "Feed")
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        UserDefaults.standard.removeObject(forKey: "Feed")
+    }
+    
     func test_retrieve_deliversEmptyOnEmptyCache() {
         let sut = makeSUT()
 
@@ -26,9 +36,9 @@ class CodableFeedStoreChallengeTests: XCTestCase, FeedStoreSpecs {
     }
 
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() {
-//        let sut = makeSUT()
-//
-//        assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut)
+        let sut = makeSUT()
+
+        assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut)
     }
 
     func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
