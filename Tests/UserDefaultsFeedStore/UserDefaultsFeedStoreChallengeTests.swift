@@ -5,7 +5,7 @@
 import XCTest
 import FeedStoreChallenge
 
-class CodableFeedStoreChallengeTests: XCTestCase, FeedStoreSpecs {
+class UserDefaultsFeedStoreChallengeTests: XCTestCase, FeedStoreSpecs {
     
 //
 //   We recommend you to implement one test at a time.
@@ -98,7 +98,7 @@ class CodableFeedStoreChallengeTests: XCTestCase, FeedStoreSpecs {
     // - MARK: Helpers
     
     private func makeSUT() -> FeedStore {
-        CodableFeedStore()
+        UserDefaultsFeedStore()
     }
     
 }

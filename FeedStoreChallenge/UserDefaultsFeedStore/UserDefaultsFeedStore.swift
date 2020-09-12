@@ -4,7 +4,7 @@
 
 import Foundation
 
-public final class CodableFeedStore: FeedStore {
+public final class UserDefaultsFeedStore: FeedStore {
     private struct Cache: Codable {
         let images: [LocalFeedImage]
         let timestamp: Date
