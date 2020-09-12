@@ -17,13 +17,13 @@ public final class UserDefaultsFeedStore: FeedStore {
     public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
         let cache = Cache(images: feed, timestamp: timestamp)
         let feedData = try! JSONEncoder().encode(cache)
-        UserDefaults.standard.set(feedData, forKey: "Feed")
+        defaults.set(feedData, forKey: key)
         
         completion(nil)
     }
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
-        guard let feedData = UserDefaults.standard.object(forKey: "Feed") as? Data
+        guard let feedData = defaults.object(forKey: key) as? Data
             else { return completion(.empty) }
         
         let cache = try! JSONDecoder().decode(Cache.self, from: feedData)
@@ -31,5 +31,10 @@ public final class UserDefaultsFeedStore: FeedStore {
         completion(.found(feed: cache.images, timestamp: cache.timestamp))
     }
     
-    public init() {}
+    private let defaults = UserDefaults.standard
+    private let key: String
+    
+    public init(key: String) {
+        self.key = key
+    }
 }
