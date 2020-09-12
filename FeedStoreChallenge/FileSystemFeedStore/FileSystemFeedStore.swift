@@ -14,7 +14,7 @@ public final class FileSystemFeedStore: FeedStore {
     }
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
-        
+        completion(.empty)
     }
     
     public init() {}
